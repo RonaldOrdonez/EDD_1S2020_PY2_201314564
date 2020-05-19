@@ -1,21 +1,13 @@
 digraph arbolAVL{
 rankdir=TB;
 node[shape = record, style=filled, fillcolor=seashell2];
-dibujo[label = "<f0> |<f1> dibujo|<f2>"]; 
-"dibujo":f0 -> "biologia":f1; 
-"dibujo":f2 -> "fisica":f1; 
-biologia[label = "<f0> |<f1> biologia|<f2>"]; 
-"biologia":f0 -> "algebra":f1; 
-"biologia":f2 -> "contabilidad":f1; 
-algebra[label = "<f0> |<f1> algebra|<f2>"]; 
-contabilidad[label = "<f0> |<f1> contabilidad|<f2>"]; 
+deporte[label = "<f0> |<f1> deporte|<f2>"]; 
+"deporte":f0 -> "ciencia":f1; 
+"deporte":f2 -> "fisica":f1; 
+ciencia[label = "<f0> |<f1> ciencia|<f2>"]; 
 fisica[label = "<f0> |<f1> fisica|<f2>"]; 
-"fisica":f0 -> "esgrima":f1; 
-"fisica":f2 -> "matematica":f1; 
-esgrima[label = "<f0> |<f1> esgrima|<f2>"]; 
-matematica[label = "<f0> |<f1> matematica|<f2>"]; 
-"matematica":f0 -> "logica":f1; 
-"matematica":f2 -> "quimica":f1; 
-logica[label = "<f0> |<f1> logica|<f2>"]; 
+"fisica":f0 -> "economia":f1; 
+"fisica":f2 -> "quimica":f1; 
+economia[label = "<f0> |<f1> economia|<f2>"]; 
 quimica[label = "<f0> |<f1> quimica|<f2>"]; 
 }

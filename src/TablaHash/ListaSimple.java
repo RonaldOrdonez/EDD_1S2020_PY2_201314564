@@ -15,7 +15,8 @@ public class ListaSimple
         primero=null;
         tamanio = 0;
     }
-    
+              
+            
     public int obtenerTamanio()
     {
         return tamanio;
@@ -70,6 +71,38 @@ public class ListaSimple
         return encontrado;
     }
     
+    public Usuario buscarUser(int carnet){        
+        
+        Usuario aux = primero;
+        
+        // Bandera para indicar si el valor existe.
+        boolean encontrado = false;
+        
+        // Recorre la lista hasta encontrar el elemento o hasta 
+        // llegar al final de la lista.
+        while(aux != null && encontrado != true)
+        {
+            // Consulta si el valor del nodo es igual al de referencia.
+            if (carnet == aux.numero_carnet)
+            {
+                // Cambia el valor de la bandera.
+                encontrado = true;                
+            }
+            else
+            {
+                // Avanza al siguiente. nodo.
+                aux = aux.siguiente;
+            }
+        }
+        if(encontrado==false)
+        {
+            aux=null;
+        }        
+        // Retorna el resultado de la bandera.
+        return aux;
+    }
+    
+    
     public void editarInformacionDeUsuario(int numero_carnet, String nombre, String apellido, String carrera, String contrasenia){
         
         // Consulta si el valor existe en la lista
@@ -92,7 +125,7 @@ public class ListaSimple
     }
     
     
-     public void eliminarUsuario(int numero_carnet){
+    public void eliminarUsuario(int numero_carnet){
         
         // Consulta si el valor de referencia existe en la lista.
         if (buscar(numero_carnet)) 
@@ -142,6 +175,7 @@ public class ListaSimple
             }
              System.out.print("("+aux.numero_carnet+","+aux.nombre+","+aux.apellido+","+aux.carrera+")");            
         }   
-    }    
-    
+    }
+
+   
 }

@@ -24,6 +24,16 @@ public class Usuario
         this.siguiente = null;
     }
     
+    public Usuario()
+    {
+        numero_carnet=0;
+        nombre="";
+        apellido="";
+        carrera="";
+        contrasenia="";
+        siguiente=null;
+    }
+    
     
     
 

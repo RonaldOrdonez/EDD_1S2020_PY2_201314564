@@ -10,13 +10,17 @@ import java.text.Collator;
 public class ArbolAVL 
 {
     public NodoAVL raiz;    
-    private String recorreAVL;
+    private String recorreAVL;  
+    private int numNodos;
+    private int countVisit;
     
     //constructor que inicializa su raiz con null
     public ArbolAVL() 
     {
         raiz=null;
         recorreAVL="";
+        numNodos=0;
+        countVisit=0;
     }
 
     //obtiene el nodo raiz del arbol
@@ -181,10 +185,7 @@ public class ArbolAVL
         deleteNode(raiz, categoria);
     }
     
-     /* Given a non-empty binary search tree, return the  
-    node with minimum key value found in that tree.  
-    Note that the entire tree does not need to be  
-    searched. */
+    ///metodo para saber el valor minimo de un subarbol para subirlo a la raiz
     private NodoAVL minValueNode(NodoAVL node)  
     {  
         NodoAVL current = node;  
@@ -292,12 +293,14 @@ public class ArbolAVL
     public void preorden()
     {
         recorridoPreorden(raiz);        
+        System.out.println("Numero de Nodos Visitados: "+numNodos);
     }        
     private void recorridoPreorden(NodoAVL nodo)
     {
         if(nodo!=null)
         {
             System.out.println(nodo.categoria+" ");                  
+            numNodos++;
             recorridoPreorden(nodo.ramaIzq);               
             recorridoPreorden(nodo.ramaDer);
        }
@@ -307,6 +310,7 @@ public class ArbolAVL
     public void inorden()
     {
         recorridoInorden(raiz);
+        System.out.println("Numero de Nodos Visitados: "+numNodos);
     }
     private void recorridoInorden(NodoAVL nodo)
     {
@@ -314,14 +318,16 @@ public class ArbolAVL
         {                            
             recorridoInorden(nodo.ramaIzq);                                              
             System.out.println(nodo.categoria+" ");  
+            numNodos++;
             recorridoInorden(nodo.ramaDer);
        }
     }
     
-    //Recorrido del arbol AVL en posorden
+    //Recorrido del arbol AVL en postorden
     public void postorden()
     {
         recorridoPostorden(raiz);
+        System.out.println("Numero de Nodos Visitados: "+numNodos);
     }    
     private void recorridoPostorden(NodoAVL nodo)
     {
@@ -329,7 +335,8 @@ public class ArbolAVL
         {            
             recorridoPostorden(nodo.ramaIzq);                                              
             recorridoPostorden(nodo.ramaDer);
-            System.out.println(nodo.categoria+" ");                  
+            System.out.println(nodo.categoria+" ");   
+            numNodos++;
        }
     }
    
@@ -398,9 +405,225 @@ public class ArbolAVL
         }
     }
     
+    
+    private void recorreArbol(NodoAVL raiz_)
+    {
+        if(raiz_!=null)
+        {            
+            numNodos++;
+            recorreArbol(raiz_.ramaIzq);               
+            recorreArbol(raiz_.ramaDer);
+       }        
+    }
+    
     //GRAFICAR AVL EN PRE-ORDEN
+    public void graficarPreOrden()
+    {
+        recorreArbol(raiz);
+        FileWriter fichero;
+        PrintWriter escritor;
+        try
+        {
+            fichero = new FileWriter("avlPreorden.dot");
+            escritor = new PrintWriter(fichero);
+            escritor.print(getCodigoPreorden());
+            recorreAVL="";
+            countVisit = 0;
+            numNodos = 0;
+            fichero.close();
+            try
+            {
+                Runtime rt = Runtime.getRuntime();
+                rt.exec( "dot -Tjpg -o avlPreorden.jpg avlPreorden.dot");
+                //Esperamos medio segundo para dar tiempo a que la imagen se genere.
+                //Para que no sucedan errores en caso de que se decidan graficar varios
+                //árboles sucesivamente.
+                Thread.sleep(500);
+            } 
+            catch (Exception ex) 
+            {
+            System.err.println("Error al generar la imagen para el archivo avlPreorden.dot");
+            }  
+        } 
+        catch (Exception e)
+        {
+            System.err.println("Error al escribir el archivo avlPreorden.dot");
+        }        
+    }
+    
+    private String getCodigoPreorden()
+    {
+        String recorridoAVLPre = "";
+        recorridoAVLPre += "digraph arbolAVLPreOrden{\n";
+        recorridoAVLPre += "rankdir=LR;";
+        recorridoAVLPre += "node[shape = box, style=filled, fillcolor=seashell2, fontsize=20];\n";
+        preOrdenRecursivo(raiz);
+        recorridoAVLPre += recorreAVL;
+        recorridoAVLPre += ";\nlabel=\"Recorrido Preorden\";\nfontsize=25;\n";
+        recorridoAVLPre +=  "}\n";
+        
+        return recorridoAVLPre;
+        
+    }
+    
+    private void preOrdenRecursivo(NodoAVL raiz_)
+    {
+        if (raiz_!=null)
+        {   
+            if(countVisit==numNodos-1)
+            {
+                recorreAVL += raiz_.categoria;
+            }
+            else
+            {
+                recorreAVL += raiz_.categoria+"->";
+                countVisit++;
+                preOrdenRecursivo(raiz_.ramaIzq);
+                preOrdenRecursivo(raiz_.ramaDer);                
+            }
+        }        
+        
+    }
+    
     
     //GRAFICAR AVL EN IN-ORDEN
+    public void graficarInOrden()
+    {
+        recorreArbol(raiz);
+        FileWriter fichero;
+        PrintWriter escritor;
+        try
+        {
+            fichero = new FileWriter("avlInorden.dot");
+            escritor = new PrintWriter(fichero);
+            escritor.print(getCodigoInorden());
+            recorreAVL="";
+            countVisit = 0;
+            numNodos = 0;
+            fichero.close();
+            try
+            {
+                Runtime rt = Runtime.getRuntime();
+                rt.exec( "dot -Tjpg -o avlInorden.jpg avlInorden.dot");
+                //Esperamos medio segundo para dar tiempo a que la imagen se genere.
+                //Para que no sucedan errores en caso de que se decidan graficar varios
+                //árboles sucesivamente.
+                Thread.sleep(500);
+            } 
+            catch (Exception ex) 
+            {
+            System.err.println("Error al generar la imagen para el archivo avlInorden.dot");
+            }  
+        } 
+        catch (Exception e)
+        {
+            System.err.println("Error al escribir el archivo avlInorden.dot");
+        }   
+     
+    }
+    
+    private String getCodigoInorden()
+    {
+        String recorridoAVLIn = "";
+        recorridoAVLIn += "digraph arbolAVLInOrden{\n";
+        recorridoAVLIn += "rankdir=LR;";
+        recorridoAVLIn += "node[shape = box, style=filled, fillcolor=seashell2, fontsize=20];\n";
+        InOrdenRecursivo(raiz);
+        recorridoAVLIn += recorreAVL;
+        recorridoAVLIn += ";\nlabel=\"Recorrido Inorden\";\nfontsize=25;\n";
+        recorridoAVLIn +=  "}\n";
+        
+        return recorridoAVLIn;        
+    }
+    
+    private void InOrdenRecursivo(NodoAVL raiz_)
+    {
+        if (raiz_!=null)
+        {   
+            InOrdenRecursivo(raiz_.ramaIzq);
+            if(countVisit==numNodos-1)
+            {
+                recorreAVL += raiz_.categoria;
+            }
+            else
+            {
+                recorreAVL += raiz_.categoria+"->";
+                countVisit++;                                
+            }
+            InOrdenRecursivo(raiz_.ramaDer);                
+        }      
+    }    
+    
     
     //GRAFICAR AVL EN POST-ORDEN
+    public void graficarPostOrden()
+    {
+        recorreArbol(raiz);
+        FileWriter fichero;
+        PrintWriter escritor;
+        try
+        {
+            fichero = new FileWriter("avlPostorden.dot");
+            escritor = new PrintWriter(fichero);
+            escritor.print(getCodigoPostorden());
+            recorreAVL="";
+            countVisit = 0;
+            numNodos = 0;
+            fichero.close();
+            try
+            {
+                Runtime rt = Runtime.getRuntime();
+                rt.exec( "dot -Tjpg -o avlPostorden.jpg avlPostorden.dot");
+                //Esperamos medio segundo para dar tiempo a que la imagen se genere.
+                //Para que no sucedan errores en caso de que se decidan graficar varios
+                //árboles sucesivamente.
+                Thread.sleep(500);
+            } 
+            catch (Exception ex) 
+            {
+            System.err.println("Error al generar la imagen para el archivo avlPostorden.dot");
+            }  
+        } 
+        catch (Exception e)
+        {
+            System.err.println("Error al escribir el archivo avlPostorden.dot");
+        }   
+        
+    }
+    
+    private String getCodigoPostorden()
+    {
+        String recorridoAVLPost = "";
+        recorridoAVLPost += "digraph arbolAVLPostOrden{\n";
+        recorridoAVLPost += "rankdir=LR;";
+        recorridoAVLPost += "node[shape = box, style=filled, fillcolor=seashell2, fontsize=20];\n";
+        postOrdenRecursivo(raiz);
+        recorridoAVLPost += recorreAVL;
+        recorridoAVLPost += ";\nlabel=\"Recorrido Postorden\";\nfontsize=25;\n";
+        recorridoAVLPost +=  "}\n";
+        
+        return recorridoAVLPost;
+        
+    }
+    
+    private void postOrdenRecursivo(NodoAVL raiz_)
+    {
+        if (raiz_!=null)
+        {   
+            postOrdenRecursivo(raiz_.ramaIzq);
+            postOrdenRecursivo(raiz_.ramaDer);    
+            
+            if(countVisit==numNodos-1)
+            {
+                recorreAVL += raiz_.categoria;
+            }
+            else
+            {
+                recorreAVL += raiz_.categoria+"->";
+                countVisit++;                                
+            }
+                        
+        }      
+    }
+    
 }

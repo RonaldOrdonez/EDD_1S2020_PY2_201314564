@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package GUI;
-
 import javax.swing.JOptionPane;
 
 /**
@@ -17,7 +16,7 @@ public class IniciarSesion extends javax.swing.JFrame {
      * Creates new form IniciarSesion
      */
     public IniciarSesion() {
-        initComponents();
+        initComponents();        
     }
 
     /**
@@ -34,10 +33,10 @@ public class IniciarSesion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
         btnIniciarSesion = new javax.swing.JButton();
         checkAdmin = new javax.swing.JCheckBox();
         checkAlumno = new javax.swing.JCheckBox();
+        txtpass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,9 +49,7 @@ public class IniciarSesion extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
         jLabel3.setText("Contraseña");
 
-        txtUsuario.setToolTipText("nombre de usuario");
-
-        txtPassword.setToolTipText("contraseña de usuario");
+        txtUsuario.setToolTipText("Ingrese su nombre de usuario");
 
         btnIniciarSesion.setText("ENTRAR");
         btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -67,6 +64,13 @@ public class IniciarSesion extends javax.swing.JFrame {
         checkAlumno.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
         checkAlumno.setText("Alumno");
 
+        txtpass.setToolTipText("Ingrese su contraseña");
+        txtpass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtpassActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -79,14 +83,13 @@ public class IniciarSesion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(checkAdmin)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(checkAlumno))
-                        .addComponent(txtUsuario)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtPassword)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(checkAdmin)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(checkAlumno))
+                    .addComponent(txtUsuario)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtpass))
                 .addContainerGap(114, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -101,7 +104,7 @@ public class IniciarSesion extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkAdmin)
@@ -126,19 +129,24 @@ public class IniciarSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        if(txtUsuario.getText().equals("admin")   && txtPassword.getText().equals("admin") && checkAdmin.isSelected())
+        if(txtUsuario.getText().equals("admin")   && txtpass.getText().equals("admin") && checkAdmin.isSelected())
         {
-            PantallaAlumno in = new PantallaAlumno();
+            
+            Administrador in = new Administrador();
             in.setVisible(true);
             in.setResizable(false);
             in.setLocationRelativeTo(null);
             dispose();
-        }
+        }        
         else
         {
             JOptionPane.showMessageDialog(null, "Usuario o Contraseña Incorrectos");
         }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
+    private void txtpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtpassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,7 +191,7 @@ public class IniciarSesion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsuario;
+    private javax.swing.JPasswordField txtpass;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,0 +1,6 @@
+digraph arbolAVLPreOrden{
+rankdir=LR;node[shape = box, style=filled, fillcolor=seashell2, fontsize=20];
+deporte->ciencia->fisica->economia->quimica;
+label="Recorrido Preorden";
+fontsize=25;
+}
