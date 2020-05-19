@@ -130,8 +130,7 @@ public class IniciarSesion extends javax.swing.JFrame {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         if(txtUsuario.getText().equals("admin")   && txtpass.getText().equals("admin") && checkAdmin.isSelected())
-        {
-            
+        {            
             Administrador in = new Administrador();
             in.setVisible(true);
             in.setResizable(false);
